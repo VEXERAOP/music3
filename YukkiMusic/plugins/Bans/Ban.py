@@ -3,7 +3,7 @@ from pyrogram import filters
 from .admin_check import authorized_users_only
 from pyrogram.types import Message
 from .extract import extract
-
+from time import time
 
 admins_in_chat = {}
 
