@@ -1,5 +1,7 @@
 from pyrogram import Client, filters
 from .admins import adminsOnly
+from YukkiMusic import app
+
 
 
 async def member_permissions(chat_id: int, user_id: int):
