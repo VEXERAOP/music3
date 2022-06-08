@@ -1,6 +1,6 @@
 from functools import wraps
 from traceback import format_exc as err
-
+from pyrogram import filters
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
 
