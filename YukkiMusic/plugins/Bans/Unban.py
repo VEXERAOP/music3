@@ -1,11 +1,11 @@
 from YukkiMusic import app
 from pyrogram import filters
-from .admin_check import Authorized_user
+from .admin_check import authorized_users_only
 
 
 
 @app.on_message(filters.command("unban") & ~filters.edited & ~filters.private)
-@
+@authorized_users_only
 async def unban_func(_, message: Message):
     # we don't need reasons for unban, also, we
     # don't need to get "text_mention" entity, because
