@@ -19,8 +19,6 @@ from config import OWNER_ID
 
 SUDOERS = filters.user()
 
-if OWNER_ID not in SUDOERS:
-    SUDOERS.add(OWNER_ID)
 
 admins_in_chat = {}
 
