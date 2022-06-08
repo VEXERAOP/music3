@@ -1,17 +1,9 @@
-from typing import List
+from typing import List, Dict
 
 from pyrogram.types import Chat
 
 
-admins 
-
-
-admins =
-
-
-
-admins = 
-
+admins = {}
 
 admins: Dict[int, List[int]] = {}
 
@@ -36,7 +28,7 @@ async def get_administrators(chat: Chat) -> List[int]:
         to_set = []
 
         for administrator in administrators:
-            if administrator.can_manage_voice_chats:
+            if administrator.can_restrict_members:
                 to_set.append(administrator.user.id)
 
         set(chat.id, to_set)
