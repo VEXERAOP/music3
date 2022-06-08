@@ -1,7 +1,16 @@
 from pyrogram import Client, filters
 from YukkiMusic import userbot as USER
 from config import OWNER_ID
+from typing import Callable
+from pyrogram.types import Message
 
+
+def sudo_users_only(func: Callable) -> Callable:
+    async def decorator(client: Client, message: Message):
+        if message.from_user.id in OWNER_ID:
+            return await func(client, message)
+
+    return decorator
 
 
 @Client.on_message(filters.command(["alljoin"]))
