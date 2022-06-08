@@ -1,7 +1,33 @@
 from pyrogram import Client, filters
 from .admins import adminsOnly
 from YukkiMusic import app
+from .Helper import (
+    extract_user,
+    extract_user_and_reason,
+    time_converter,
+)
 
+
+admins_in_chat = {}
+
+
+async def list_admins(chat_id: int):
+    global admins_in_chat
+    if chat_id in admins_in_chat:
+        interval = time() - admins_in_chat[chat_id]["last_updated_at"]
+        if interval < 3600:
+            return admins_in_chat[chat_id]["data"]
+
+    admins_in_chat[chat_id] = {
+        "last_updated_at": time(),
+        "data": [
+            member.user.id
+            async for member in app.iter_chat_members(
+                chat_id, filter="administrators"
+            )
+        ],
+    }
+    return admins_in_chat[chat_id]["data"]
 
 
 async def member_permissions(chat_id: int, user_id: int):
