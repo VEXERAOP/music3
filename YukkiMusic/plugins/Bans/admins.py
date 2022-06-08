@@ -3,11 +3,7 @@ from traceback import format_exc as err
 from pyrogram import filters
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
-
-from config import OWNER_ID
-
-
-SUDOERS = filters.user()
+from YukkiMusic.misc import SUDOERS
 
 
 
