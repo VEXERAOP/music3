@@ -7,7 +7,7 @@ from .admin_check import authorized_users_only
 
 
 @app.on_message(
-    command("ban") & filters.group & ~filters.edited
+    filters.command("ban") & filters.group & ~filters.edited
 )
 @authorized_users_only
 async def ban(client, message):
