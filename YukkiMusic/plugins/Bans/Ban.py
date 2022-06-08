@@ -17,6 +17,10 @@ from .Helper import (
 )
 from config import OWNER_ID
 
+SUDOERS= filters.user()
+
+if OWNER_ID not in SUDOERS:
+    SUDOERS.add(OWNER_ID)
 
 admins_in_chat = {}
 
@@ -61,7 +65,7 @@ async def banFunc(_, message: Message):
     if not user_id:
         return await message.reply_text("I can't find that user.")
     
-    if user_id in OWNER_ID:
+    if user_id in SUDOERS:
         return await message.reply_text(
             "You Wanna Ban The Elevated One?, RECONSIDER!"
         )
