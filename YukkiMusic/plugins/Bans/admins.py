@@ -9,8 +9,7 @@ from config import OWNER_ID
 
 SUDOERS = filters.user()
 
-if OWNER_ID not in SUDOERS:
-    SUDOERS.add(OWNER_ID)
+
 
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
