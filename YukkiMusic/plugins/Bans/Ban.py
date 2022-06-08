@@ -1,6 +1,6 @@
 import asyncio
 from time import time
-
+import os
 from pyrogram import filters, Client
 from pyrogram.types import (
     CallbackQuery,
@@ -17,10 +17,7 @@ from .Helper import (
 )
 from config import OWNER_ID
 
-x = app.get_me()
-
-
-BOT_ID = x.id
+BOT_ID = int(os.environ.get("BOT_ID", None))
 
 admins_in_chat = {}
 
