@@ -6,6 +6,9 @@ from pyrogram.types import Message
 
 from config import OWNER_ID
 
+
+SUDOERS = filters.user()
+
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
     try:
@@ -67,7 +70,7 @@ def adminsOnly(permission):
             # For admins and sudo users
             userID = message.from_user.id
             permissions = await member_permissions(chatID, userID)
-            if userID not in OWNER_ID and permission not in permissions:
+            if userID not in SUDOERS and permission not in permissions:
                 return await unauthorised(message, permission, subFunc2)
             return await authorised(
                 func, subFunc2, client, message, *args, **kwargs
