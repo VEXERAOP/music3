@@ -49,7 +49,7 @@ async def member_permissions(chat_id: int, user_id: int):
     if member.can_restrict_members:
         perms.append("can_restrict_members")
 
-@Client.on_message(
+@app.on_message(
     filters.command(["ban", "dban", "tban"])
     & ~filters.edited
     & ~filters.private
