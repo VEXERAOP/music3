@@ -1,4 +1,13 @@
-from pyrogram import Client, filters
+import asyncio
+from time import time
+
+from pyrogram import filters, Client
+from pyrogram.types import (
+    CallbackQuery,
+    ChatMemberUpdated,
+    ChatPermissions,
+    Message,
+)
 from .admins import adminsOnly
 from YukkiMusic import app
 from .Helper import (
@@ -6,7 +15,12 @@ from .Helper import (
     extract_user_and_reason,
     time_converter,
 )
+from config import OWNER_ID
 
+x = app.get_me()
+
+
+BOT_ID = x.id
 
 admins_in_chat = {}
 
