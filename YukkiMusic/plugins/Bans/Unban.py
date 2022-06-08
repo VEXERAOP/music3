@@ -24,6 +24,18 @@ async def unban_func(_, message: Message):
         return await message.reply_text(
             "Provide a username or reply to a user's message to unban."
         )
-    await message.chat.unban_member(user)
-    umention = (await app.get_users(user)).mention
-    await message.reply_text(f"Unbanned! {umention}")
+    try:
+        mention = (await app.get_users(user_id)).mention
+    except IndexError:
+        mention = (
+            message.reply_to_message.sender_chat.title
+            if message.reply_to_message
+            else "Anon"
+        )
+
+    msg = (
+        f"**UNBanned User:** {mention}\n"
+        f"**UNBanned By:** {message.from_user.mention if message.from_user else 'Anon'}\n"
+    )
+    await message.chat.unban_member(user_id)
+    await message.reply_text(msg)
