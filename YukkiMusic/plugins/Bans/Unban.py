@@ -25,7 +25,7 @@ async def unban_func(_, message: Message):
             "Provide a username or reply to a user's message to unban."
         )
     try:
-        mention = (await app.get_users(user_id)).mention
+        mention = (await app.get_users(user)).mention
     except IndexError:
         mention = (
             message.reply_to_message.sender_chat.title
