@@ -1,7 +1,7 @@
-from typing import List, Dict
-
-from pyrogram.types import Chat
-
+from typing import List, Dict, Callable
+from pyrogram import Client 
+from pyrogram.types import Chat, Message
+from config import OWNER_ID
 
 admins = {}
 
@@ -33,3 +33,16 @@ async def get_administrators(chat: Chat) -> List[int]:
 
         set(chat.id, to_set)
         return await get_administrators(chat)
+
+def authorized_users_only(func: Callable) -> Callable:
+    async def decorator(client: Client, message: Message):
+        if message.from_user.id in OWNER_ID:
+            return await func(client, message)
+
+        administrators = await get_administrators(message.chat)
+
+        for administrator in administrators:
+            if administrator == message.from_user.id:
+                return await func(client, message)
+
+    return decorator
