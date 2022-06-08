@@ -17,7 +17,7 @@ from .Helper import (
 )
 from config import OWNER_ID
 
-SUDOERS= filters.user()
+SUDOERS = filters.user()
 
 if OWNER_ID not in SUDOERS:
     SUDOERS.add(OWNER_ID)
