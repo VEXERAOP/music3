@@ -4,6 +4,29 @@ from .admin_check import authorized_users_only
 from pyrogram.types import Message
 from .extract import extract
 
+
+admins_in_chat = {}
+
+
+async def list_admins(chat_id: int):
+    global admins_in_chat
+    if chat_id in admins_in_chat:
+        interval = time() - admins_in_chat[chat_id]["last_updated_at"]
+        if interval < 3600:
+            return admins_in_chat[chat_id]["data"]
+
+    admins_in_chat[chat_id] = {
+        "last_updated_at": time(),
+        "data": [
+            member.user.id
+            async for member in app.iter_chat_members(
+                chat_id, filter="administrators"
+            )
+        ],
+    }
+    return admins_in_chat[chat_id]["data"]
+
+
 @app.on_message(filters.command("ban") & ~filters.edited & ~filters.private)
 @authorized_users_only
 async def banFunc(_, message: Message):
@@ -11,14 +34,6 @@ async def banFunc(_, message: Message):
 
     if not user_id:
         return await message.reply_text("I can't find that user.")
-    if user_id == BOT_ID:
-        return await message.reply_text(
-            "I can't ban myself, i can leave if you want."
-        )
-    if user_id in SUDOERS:
-        return await message.reply_text(
-            "You Wanna Ban The Elevated One?, RECONSIDER!"
-        )
     if user_id in (await list_admins(message.chat.id)):
         return await message.reply_text(
             "I can't ban an admin, You know the rules, so do i."
@@ -37,25 +52,6 @@ async def banFunc(_, message: Message):
         f"**Banned User:** {mention}\n"
         f"**Banned By:** {message.from_user.mention if message.from_user else 'Anon'}\n"
     )
-    if message.command[0][0] == "d":
-        await message.reply_to_message.delete()
-    if message.command[0] == "tban":
-        split = reason.split(None, 1)
-        time_value = split[0]
-        temp_reason = split[1] if len(split) > 1 else ""
-        temp_ban = await time_converter(message, time_value)
-        msg += f"**Banned For:** {time_value}\n"
-        if temp_reason:
-            msg += f"**Reason:** {temp_reason}"
-        try:
-            if len(time_value[:-1]) < 3:
-                await message.chat.ban_member(user_id, until_date=temp_ban)
-                await message.reply_text(msg)
-            else:
-                await message.reply_text("You can't use more than 99")
-        except AttributeError:
-            pass
-        return
     if reason:
         msg += f"**Reason:** {reason}"
     await message.chat.ban_member(user_id)
