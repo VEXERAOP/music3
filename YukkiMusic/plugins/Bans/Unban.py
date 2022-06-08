@@ -11,7 +11,7 @@ async def member_permissions(chat_id: int, user_id: int):
     if member.can_restrict_members:
         perms.append("can_restrict_members")
 
-@Client.on_message(filters.command("unban") & ~filters.edited & ~filters.private)
+@app.on_message(filters.command("unban") & ~filters.edited & ~filters.private)
 @adminsOnly("can_restrict_members")
 async def unban_func(_, message: Message):
     # we don't need reasons for unban, also, we
