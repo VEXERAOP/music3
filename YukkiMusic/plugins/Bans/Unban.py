@@ -37,5 +37,5 @@ async def unban_func(_, message: Message):
         f"**UNBanned User:** {mention}\n"
         f"**UNBanned By:** {message.from_user.mention if message.from_user else 'Anon'}\n"
     )
-    await message.chat.unban_member(user_id)
+    await message.chat.unban_member(user)
     await message.reply_text(msg)
