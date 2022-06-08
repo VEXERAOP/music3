@@ -5,7 +5,7 @@ from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
 
 from config import OWNER_ID
-from .ban import member_permissions
+from .Ban import member_permissions
 
 
 async def authorised(func, subFunc2, client, message, *args, **kwargs):
