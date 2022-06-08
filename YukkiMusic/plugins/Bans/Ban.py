@@ -17,7 +17,6 @@ from .Helper import (
 )
 from config import OWNER_ID
 
-BOT_ID = int(os.environ.get("BOT_ID", None))
 
 admins_in_chat = {}
 
@@ -61,10 +60,7 @@ async def banFunc(_, message: Message):
 
     if not user_id:
         return await message.reply_text("I can't find that user.")
-    if user_id == BOT_ID:
-        return await message.reply_text(
-            "I can't ban myself, i can leave if you want."
-        )
+    
     if user_id in OWNER_ID:
         return await message.reply_text(
             "You Wanna Ban The Elevated One?, RECONSIDER!"
