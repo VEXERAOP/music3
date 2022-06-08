@@ -5,8 +5,15 @@ from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
 
 from config import OWNER_ID
-from .Ban import member_permissions
 
+async def member_permissions(chat_id: int, user_id: int):
+    perms = []
+    try:
+        member = await app.get_chat_member(chat_id, user_id)
+    except Exception:
+        return []
+    if member.can_restrict_members:
+        perms.append("can_restrict_members")
 
 async def authorised(func, subFunc2, client, message, *args, **kwargs):
     chatID = message.chat.id
