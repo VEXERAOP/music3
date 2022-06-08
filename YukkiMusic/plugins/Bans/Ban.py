@@ -15,10 +15,7 @@ from .Helper import (
     extract_user_and_reason,
     time_converter,
 )
-from config import OWNER_ID
-
-SUDOERS = filters.user()
-
+from YukkiMusic.misc import SUDOERS
 
 admins_in_chat = {}
 
